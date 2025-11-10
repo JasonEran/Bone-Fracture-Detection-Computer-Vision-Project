@@ -1,0 +1,63 @@
+dataset:
+  source_dir: BoneFractureYolo8
+  prepared_dir: prepared/fracatlas_yolo6
+  splits: ["train", "valid", "test"]
+  class_names:
+    - Elbow
+    - Fingers
+    - Forearm
+    - Humerus
+    - Shoulder
+    - Wrist
+  # Original Roboflow export contains 7 categories; remap them onto the 6 canonical classes.
+  class_remap:
+    "0": 0  # elbow positive -> Elbow
+    "1": 1  # fingers positive -> Fingers
+    "2": 2  # forearm fracture -> Forearm
+    "3": 3  # humerus fracture -> Humerus
+    "4": 3  # humerus -> Humerus
+    "5": 4  # shoulder fracture -> Shoulder
+    "6": 5  # wrist positive -> Wrist
+  copy_strategy: hardlink  # options: hardlink, copy
+
+training:
+  model: yolov8s-seg.pt
+  epochs: 100
+  batch: 8
+  imgsz: 1024
+  lr0: 0.0001
+  lrf: 0.01
+  optimizer: AdamW
+  cos_lr: true
+  device: auto
+  workers: 8
+  amp: true
+  patience: 30
+  pretrained: true
+  project: runs/fracatlas
+  run_name: yolov8s-seg-baseline
+  resume: false
+
+augmentation:
+  hsv_h: 0.015
+  hsv_s: 0.7
+  hsv_v: 0.4
+  degrees: 5.0
+  translate: 0.08
+  scale: 0.5
+  shear: 2.0
+  perspective: 0.0
+  flipud: 0.0
+  fliplr: 0.5
+  mosaic: 0.2
+  mixup: 0.0
+
+checkpoint:
+  save_period: 10
+
+logging:
+  tensorboard: true
+  tensorboard_dir: runs/tensorboard
+
+target_metrics:
+  map50: 0.562

@@ -1,0 +1,24 @@
+# Python cache and virtual environments
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.venv311/
+.venv/
+*.pyc
+
+# Local datasets and derived copies
+bone fracture detection.v4-v4.yolov8/
+BoneFractureYolo8/
+prepared/
+
+# Training artifacts and logs
+*.pt
+*.pth
+*.onnx
+*.log
+
+# IDE/system noise
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
